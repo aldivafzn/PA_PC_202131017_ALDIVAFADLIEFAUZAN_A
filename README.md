@@ -5,17 +5,31 @@ Word segmentation dalam Jupyter Notebook adalah proses memisahkan teks berbahasa
 
 Berikut adalah langkah-langkah umum untuk melakukan word segmentation dalam Jupyter Notebook:
 
-1. Persiapkan lingkungan: Pastikan Anda telah menginstal pustaka-pustaka NLP yang dibutuhkan di dalam lingkungan Jupyter Notebook. Ini dapat dilakukan dengan menggunakan pip atau conda untuk menginstal pustaka yang diperlukan, seperti NLTK, SpaCy, atau pustaka-pustaka bahasa tertentu seperti PyThaiNLP.
+Terlebih dahulu, mengimpor modul yang diperlukan: matplotlib.pyplot, skimage.io, skimage.color, dan skimage.measure. Modul-modul ini digunakan untuk membuat plot dan melakukan pemrosesan gambar.
 
-2. Impor pustaka: Di dalam Jupyter Notebook, Anda perlu mengimpor pustaka yang diperlukan sebelum dapat menggunakannya. Misalnya, jika Anda menggunakan NLTK, Anda dapat mengimpornya dengan menggunakan perintah `import nltk`.
+Kemudian, mendefinisikan fungsi detect_letters(image_path) yang akan digunakan untuk mendeteksi huruf-huruf dalam gambar. Fungsi ini mengambil path gambar sebagai argumen.
 
-3. Inisialisasi pustaka: Beberapa pustaka NLP memerlukan inisialisasi sebelum digunakan. Misalnya, jika Anda menggunakan SpaCy, Anda perlu menginisialisasi komponen bahasa yang relevan dengan menggunakan perintah `nlp = spacy.load('en')` untuk bahasa Inggris atau `nlp = spacy.load('zh')` untuk bahasa Tionghoa.
+Di dalam fungsi detect_letters, Anda membaca gambar menggunakan io.imread(image_path), mengonversikannya ke skala keabuan menggunakan color.rgb2gray(image), dan melakukan thresholding untuk mengubah gambar menjadi biner.
 
-4. Baca dan persiapkan teks: Baca teks yang ingin Anda segmenkan ke dalam Jupyter Notebook. Anda dapat membaca teks dari berkas teks atau sumber data lainnya, atau langsung menuliskannya di dalam kode Python.
+Setelah itu, menerapkan operasi morfologi dengan menggunakan measure.label untuk membersihkan gambar dan measure.find_contours untuk menemukan kontur huruf-huruf.
 
-5. Lakukan word segmentation: Gunakan fungsi atau metode yang disediakan oleh pustaka NLP yang Anda gunakan untuk melakukan word segmentation. Misalnya, jika Anda menggunakan NLTK, Anda dapat menggunakan fungsi `word_tokenize()` untuk memisahkan kata-kata dalam teks. Jika Anda menggunakan SpaCy, Anda dapat menggunakan objek `nlp` yang telah diinisialisasi untuk memproses teks dan mendapatkan kata-kata individunya.
+Selanjutnya, mendeteksi huruf-huruf berdasarkan area dan aspek rasio. Anda mengiterasi melalui setiap kontur dan menghitung dimensi dan properti huruf-huruf yang terdeteksi. Jika memenuhi kondisi tertentu (area > 100 dan aspek rasio > 0.2), maka huruf tersebut dianggap terdeteksi.
 
-6. Tampilkan hasil: Setelah melakukan word segmentation, Anda dapat menampilkan kata-kata yang telah dipisahkan ke dalam Jupyter Notebook. Anda dapat menggunakan fungsi `print()` untuk menampilkan hasilnya, atau menggunakan metode lain yang sesuai dengan tujuan Anda.
+Fungsi detect_letters mengembalikan daftar huruf-huruf yang terdeteksi, yang berisi koordinat dan dimensi persegi panjang yang mengelilingi huruf.
+
+Setelah mendefinisikan fungsi detect_letters,  memanggilnya dengan memberikan path gambar sebagai argumen. Hasil deteksi huruf-huruf disimpan dalam variabel detected_letters.
+
+Selanjutnya, menggunakan matplotlib untuk menampilkan gambar awal, gambar dengan persegi panjang yang mengelilingi huruf-huruf yang terdeteksi, serta informasi dimensi huruf pada gambar tersebut.
+
+Menggunakan plt.subplot dan plt.imshow, Anda menampilkan gambar awal pada subplot pertama.
+
+Pada subplot kedua, menampilkan gambar dengan persegi panjang yang mengelilingi huruf-huruf yang terdeteksi. menggunakan plt.gca().add_patch(rect) untuk menambahkan persegi panjang pada gambar.
+
+Pada subplot ketiga, menampilkan gambar dengan persegi panjang yang mengelilingi huruf-huruf yang terdeteksi. juga menambahkan teks yang menunjukkan dimensi huruf menggunakan plt.text.
+
+Terakhir, menggunakan plt.tight_layout() untuk mengatur tata letak plot secara rapi dan plt.show() untuk menampilkan semua subplot.
+
+Dengan demikian, kode tersebut memanfaatkan fungsi detect_letters untuk mendeteksi huruf-huruf dalam gambar dan menghasilkan visualisasi yang menunjukkan persegi panjang yang mengelilingi huruf-huruf yang terdeteksi.
 
 Word segmentation dalam Jupyter Notebook memanfaatkan kekuatan dan fleksibilitas Python serta kemampuan interaktif Jupyter Notebook untuk menjalankan kode, memvisualisasikan data, dan melihat hasil dengan cepat.
 
